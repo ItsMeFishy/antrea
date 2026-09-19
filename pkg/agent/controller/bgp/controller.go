@@ -107,8 +107,8 @@ type bgpPolicyState struct {
 	listenPort int32
 	// The AS number used by the local BGP server.
 	localASN uint32
-	listenPort int32
-	routerID  string
+	// The router ID used by the local BGP server.
+	routerID string
 	// The confederation config used by the local BGP server.
 	confederationConfig *confederationConfig
 	// routes stores all BGP routes advertised to BGP peers.
@@ -121,7 +121,7 @@ type bgpPolicyState struct {
 type BGPPolicyInfo struct {
 	BGPPolicyName           string
 	RouterID                string
-	LocalASN                int32
+	LocalASN                uint32
 	ListenPort              int32
 	ConfederationIdentifier int32
 	MemberASNs              []uint32
