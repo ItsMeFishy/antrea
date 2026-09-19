@@ -385,7 +385,7 @@ func (in *Confederation) DeepCopyInto(out *Confederation) {
 	*out = *in
 	if in.MemberASNs != nil {
 		in, out := &in.MemberASNs, &out.MemberASNs
-		*out = make([]int32, len(*in))
+		*out = make([]uint32, len(*in))
 		copy(*out, *in)
 	}
 	return

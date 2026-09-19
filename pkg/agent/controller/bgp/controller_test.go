@@ -69,7 +69,7 @@ var (
 		Name:         localNodeName,
 	}
 
-	peer1ASN          = int32(65531)
+	peer1ASN          = uint32(65531)
 	peer1AuthPassword = "bgp-peer1" // #nosec G101
 	ipv4Peer1Addr     = "192.168.77.251"
 	ipv6Peer1Addr     = "fec0::196:168:77:251"
@@ -88,7 +88,7 @@ var (
 		SessionState: bgp.SessionActive,
 	}
 
-	peer2ASN          = int32(65532)
+	peer2ASN          = uint32(65532)
 	peer2AuthPassword = "bgp-peer2" // #nosec G101
 	ipv4Peer2Addr     = "192.168.77.252"
 	ipv6Peer2Addr     = "fec0::196:168:77:252"
@@ -112,7 +112,7 @@ var (
 	updatedIPv4Peer2Config = generateBGPPeerConfig(&updatedIPv4Peer2, peer2AuthPassword)
 	updatedIPv6Peer2Config = generateBGPPeerConfig(&updatedIPv6Peer2, peer2AuthPassword)
 
-	peer3ASN          = int32(65533)
+	peer3ASN          = uint32(65533)
 	peer3AuthPassword = "bgp-peer3" // #nosec G101
 	ipv4Peer3Addr     = "192.168.77.253"
 	ipv6Peer3Addr     = "fec0::196:168:77:253"
@@ -354,7 +354,7 @@ func TestBGPPolicyAdd(t *testing.T) {
 				true,
 				false,
 				[]v1alpha1.BGPPeer{ipv4Peer1},
-				&v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				&v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			},
 			objects: []runtime.Object{
 				ipv4ClusterIP1,
@@ -636,7 +636,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 			ipv6Peer1,
 			ipv6Peer2,
 		},
-		&v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}})
+		&v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}})
 	effectivePolicyState := generateBGPPolicyState(bgpPolicyName1,
 		179,
 		65000,
@@ -663,7 +663,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 			ipv6Peer1,
 			ipv6Peer2,
 		},
-		&v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}})
+		&v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}})
 	unrelatedPolicy := generateBGPPolicy(bgpPolicyName3,
 		creationTimestampAdd2s,
 		nodeLabels2,
@@ -679,7 +679,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 			ipv6Peer1,
 			ipv6Peer2,
 		},
-		&v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}})
+		&v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}})
 	objects := []runtime.Object{
 		ipv4ClusterIP2,
 		ipv4ClusterIP2Eps,
@@ -724,7 +724,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv6Peer1,
 					ipv6Peer2,
 				},
-				&v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				&v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			expectedCalls: func(mockBGPServer *bgptest.MockInterfaceMockRecorder) {
 				mockBGPServer.Stop(gomock.Any())
 				mockBGPServer.Start(gomock.Any())
@@ -775,7 +775,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv4Peer2,
 					ipv6Peer1,
 					ipv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			expectedCalls: func(mockBGPServer *bgptest.MockInterfaceMockRecorder) {
 				mockBGPServer.Stop(gomock.Any()).Return(fmt.Errorf("failed to stop"))
 			},
@@ -798,7 +798,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv4Peer2,
 					ipv6Peer1,
 					ipv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			expectedState: generateBGPPolicyState(bgpPolicyName1,
 				179,
 				65000,
@@ -846,7 +846,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv4Peer2,
 					ipv6Peer1,
 					ipv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			expectedState: generateBGPPolicyState(bgpPolicyName1,
 				179,
 				65001,
@@ -893,7 +893,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv4Peer2,
 					ipv6Peer1,
 					ipv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			expectedState: generateBGPPolicyState(bgpPolicyName1,
 				1179,
 				65000,
@@ -944,7 +944,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv4Peer2,
 					ipv6Peer1,
 					ipv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 101, MemberASNs: []int32{65001}}),
+				}, &v1alpha1.Confederation{Identifier: 101, MemberASNs: []uint32{65001}}),
 			expectedState: generateBGPPolicyState(bgpPolicyName1,
 				1179,
 				65000,
@@ -995,7 +995,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv4Peer2,
 					ipv6Peer1,
 					ipv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65002}}),
+				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65002}}),
 			expectedState: generateBGPPolicyState(bgpPolicyName1,
 				179,
 				65000,
@@ -1097,7 +1097,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					updatedIPv6Peer2,
 					ipv4Peer3,
 					ipv6Peer3},
-				&v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				&v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			expectedState: generateBGPPolicyState(bgpPolicyName1,
 				179,
 				65000,
@@ -1142,7 +1142,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					ipv4Peer2,
 					ipv6Peer1,
 					ipv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			existingState: deepCopyBGPPolicyState(effectivePolicyState),
 			expectedState: deepCopyBGPPolicyState(effectivePolicyState),
 		},
@@ -1162,7 +1162,7 @@ func TestBGPPolicyUpdate(t *testing.T) {
 					updatedIPv4Peer2,
 					ipv6Peer1,
 					updatedIPv6Peer2,
-				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []int32{65001}}),
+				}, &v1alpha1.Confederation{Identifier: 100, MemberASNs: []uint32{65001}}),
 			existingState: deepCopyBGPPolicyState(effectivePolicyState),
 			expectedState: deepCopyBGPPolicyState(effectivePolicyState),
 		},
@@ -2164,7 +2164,7 @@ func TestSyncBGPPolicyFailures(t *testing.T) {
 
 func generateBGPPolicyState(bgpPolicyName string,
 	listenPort int32,
-	localASN int32,
+	localASN uint32,
 	routerID string,
 	bgpRoutes []bgp.Route,
 	peerConfigs []bgp.PeerConfig,
@@ -2236,7 +2236,7 @@ func generateBGPPolicy(name string,
 	creationTimestamp metav1.Time,
 	nodeSelector map[string]string,
 	listenPort int32,
-	localASN int32,
+	localASN uint32,
 	advertiseClusterIP bool,
 	advertiseExternalIP bool,
 	advertiseLoadBalancerIP bool,
@@ -2399,7 +2399,7 @@ func generateEndpointSlice(svcName string,
 	return endpointSlice
 }
 
-func generateBGPPeer(ip string, asn, port, gracefulRestartTimeSeconds int32) v1alpha1.BGPPeer {
+func generateBGPPeer(ip string, asn uint32, port, gracefulRestartTimeSeconds int32) v1alpha1.BGPPeer {
 	return v1alpha1.BGPPeer{
 		Address:                    ip,
 		Port:                       &port,
@@ -2472,7 +2472,7 @@ func TestGetBGPPolicyInfo(t *testing.T) {
 			),
 			expectedBgpPolicyInfo: &BGPPolicyInfo{
 				BGPPolicyName: bgpPolicyName1,
-				LocalASN:      int32(64512),
+				LocalASN:      uint32(64512),
 				RouterID:      nodeAnnotations1[types.NodeBGPRouterIDAnnotationKey],
 				ListenPort:    int32(179),
 			},
@@ -2492,7 +2492,7 @@ func TestGetBGPPolicyInfo(t *testing.T) {
 			),
 			expectedBgpPolicyInfo: &BGPPolicyInfo{
 				BGPPolicyName:           bgpPolicyName1,
-				LocalASN:                int32(64512),
+				LocalASN:                uint32(64512),
 				RouterID:                nodeAnnotations1[types.NodeBGPRouterIDAnnotationKey],
 				ListenPort:              int32(179),
 				ConfederationIdentifier: int32(65000),

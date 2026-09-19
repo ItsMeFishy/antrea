@@ -494,9 +494,9 @@ spec:
                       x-kubernetes-preserve-unknown-fields: true
                 localASN:
                   type: integer
-                  format: int32
+                  format: int64
                   minimum: 1
-                  maximum: 65535
+                  maximum: 4294967294
                 listenPort:
                   type: integer
                   format: int32
@@ -515,9 +515,9 @@ spec:
                       type: array
                       items:
                         type: integer
-                        format: int32
+                        format: int64
                         minimum: 1
-                        maximum: 65535
+                        maximum: 4294967294
                 advertisements:
                   type: object
                   properties:
@@ -559,9 +559,9 @@ spec:
                         default: 179
                       asn:
                         type: integer
-                        format: int32
+                        format: int64
                         minimum: 1
-                        maximum: 65535
+                        maximum: 4294967294
                       multihopTTL:
                         type: integer
                         format: int32
